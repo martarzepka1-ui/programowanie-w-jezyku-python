@@ -1,4 +1,5 @@
-def spr(x:list, y:int):
+def spr(x: list, y: int):
     return y in x
 
-print(spr([7,8,3], 7))
+
+print(spr([7, 8, 3], 7))

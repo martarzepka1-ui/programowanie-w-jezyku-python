@@ -2,7 +2,9 @@ from typing import List, Optional
 import requests
 import argparse
 
+
 URL_API = 'https://api.openbrewerydb.org/v1/breweries'
+
 
 class Brewery:
     def __init__(
@@ -32,10 +34,12 @@ class Brewery:
     def __str__(self):
         return (
             f"Brewery {self.name} ({self.brewery_type})\n"
-            f"Address: {self.street or 'N/A'}, {self.city}, {self.state}, {self.postal_code}, {self.country}\n"
+            f"Address: {self.street or 'N/A'}, {self.city}, {self.state}, "
+            f"{self.postal_code}, {self.country}\n"
             f"Phone: {self.phone or 'N/A'}\n"
             f"Website: {self.website_url or 'N/A'}\n"
         )
+
 
 def get_breweries_from_api(city: Optional[str] = None) -> list:
     params = {"per_page": 20}
@@ -44,6 +48,7 @@ def get_breweries_from_api(city: Optional[str] = None) -> list:
     response = requests.get(URL_API, params=params)
     response.raise_for_status()
     return response.json()
+
 
 def brewery_factory(breweries: list) -> List[Brewery]:
     brewery_list = []
@@ -63,18 +68,29 @@ def brewery_factory(breweries: list) -> List[Brewery]:
         brewery_list.append(brewery_obj)
     return brewery_list
 
+
 def get_args():
-    parser = argparse.ArgumentParser(description='Fetch breweries from OpenBreweryDB')
-    parser.add_argument('-c', '--city', help='Filter brewery by city', required=False)
+    parser = argparse.ArgumentParser(
+        description='Fetch breweries from OpenBreweryDB'
+    )
+    parser.add_argument(
+        '-c', '--city', help='Filter brewery by city', required=False
+    )
     return vars(parser.parse_args())
+
 
 def main():
     args = get_args()
-    breweries_data = get_breweries_from_api(city=args['city'])
-    breweries_objects = brewery_factory(breweries_data)
+    breweries_data = get_breweries_from_api(
+        city=args['city']
+    )
+    breweries_objects = brewery_factory(
+        breweries_data
+    )
 
     for brewery in breweries_objects:
         print(brewery)
+
 
 if __name__ == "__main__":
     main()

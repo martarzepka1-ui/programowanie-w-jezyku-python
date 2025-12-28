@@ -1,6 +1,7 @@
 import requests
 from typing import List, Optional
 
+
 class Brewery:
     def __init__(
         self,
@@ -29,7 +30,8 @@ class Brewery:
     def __str__(self):
         return (
             f"Brewery {self.name} ({self.brewery_type})\n"
-            f"Address: {self.street or 'N/A'}, {self.city}, {self.state}, {self.postal_code}, {self.country}\n"
+            f"Address: {self.street or 'N/A'}, {self.city}, {self.state},"
+            f" {self.postal_code}, {self.country}\n"
             f"Phone: {self.phone or 'N/A'}\n"
             f"Website: {self.website_url or 'N/A'}\n"
         )
